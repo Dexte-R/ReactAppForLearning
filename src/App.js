@@ -30,7 +30,16 @@ function App() {
   async function getTodoFromSpringBoot() {
     const id = refTodo.current.value  
     if (id === '') return null
-    let todoItemFromServer = await fetch("http://localhost:8090/" + id).then(res => res.json()).then(res => {return res})
+
+    const data = { bodyText: "TodoItem sent to server via POST request" }
+    const requestOptions = {
+      method : 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }
+    let todoItemFromServer = await fetch("http://localhost:8090/" + id, requestOptions).then(res => res.json()).then(res => {return res})
     setTodos(currentTodos => {
       return [...currentTodos, { id: uuid(), name: todoItemFromServer.bodyText, complete: false}]
     })
