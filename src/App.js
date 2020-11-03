@@ -1,10 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TodoList from './TodoList';
 import { uuid } from 'uuidv4';
 
 function App() {
   const [todos, setTodos] = useState([])
   const refTodo = useRef(todos)
+
+  useEffect(() => {
+    console.log("App started running")
+  }, [])
 
   function toggleTodo(id) {
     const newTodos = [...todos]
@@ -31,7 +35,7 @@ function App() {
     const id = refTodo.current.value  
     if (id === '') return null
 
-    const data = { bodyText: "TodoItem sent to server via POST request" }
+    const data = { bodyText: "TodoItem sent to server via POST request. This todoitem is in the JSON format and the server should be able to receive this JSON object and convert it into a POJO automatically." }
     const requestOptions = {
       method : 'POST',
       headers: {
@@ -47,15 +51,15 @@ function App() {
   }
 
   return (
-    <div>
+    <>
       <TodoList todoList={todos} toggleTodo={toggleTodo} />
       <input ref={refTodo} type="text" />
       <button onClick={handleAddTodo}>Add Todo</button>
       <button onClick={getTodoFromSpringBoot}>Add Todo From SpringBoot</button>
       <button onClick={removeCompleted}>Clear completed</button>
-      <div>{todos.filter(todo => !todo.complete).length} left to do</div>
-      <div>Additional todo item fetched from SpringBoot server</div>
-    </div>
+      <div style={{backgroundColor:"white",color:"red"}}>{todos.filter(todo => !todo.complete).length} left to do</div>
+      <div style={{backgroundColor:"white",color:"red"}}>Additional todo item fetched from SpringBoot server</div>
+    </>
   );
 }
 

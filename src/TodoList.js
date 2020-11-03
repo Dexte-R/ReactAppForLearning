@@ -7,7 +7,7 @@ export default function TodoList({ todoList, toggleTodo }) {
                 toggleTodo(todo.id)
             }
             return (
-                <div key={todo.id}>
+                <div className="container" style={{backgroundColor:"white",color:"red"}} key={todo.id}>
                     <input type="checkbox" checked={todo.complete} onChange={handleTodoClick} />
                     {todo.name}
                 </div>
